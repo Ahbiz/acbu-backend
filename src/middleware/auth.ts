@@ -113,14 +113,6 @@ function rejectIfJwtToken(token: string): void {
   }
 }
 
-/**
- * Validate the admin API key for admin-only routes (e.g. /v1/admin/weight-drift-audits).
- * Requires the `x-admin-key` header to match ADMIN_API_KEY env var.
- *
- * Delegates to requireAdminApiKey (middleware/adminAuth.ts) so the timing-safe
- * comparison against ADMIN_API_KEY has a single implementation.
- */
-export const validateAdminKey = requireAdminApiKey;
 
 /**
  * Middleware to validate API key
@@ -170,6 +162,24 @@ export const validateApiKey = async (
 
     if (!apiKeyRecord) {
       throw new AppError("Invalid API key", 401);
+    }
+
+    // Reject API keys whose associated user is disabled or deleted
+    if (apiKeyRecord.userId && apiKeyRecord.user) {
+      if (apiKeyRecord.user.deletedAt !== null) {
+        logger.warn("API key validation rejected: user account deleted", {
+          userId: apiKeyRecord.userId,
+          apiKeyId: apiKeyRecord.id,
+        });
+        throw new AppError("Invalid API key", 401);
+      }
+      if ((apiKeyRecord.user as any).isDisabled === true) {
+        logger.warn("API key validation rejected: user account disabled", {
+          userId: apiKeyRecord.userId,
+          apiKeyId: apiKeyRecord.id,
+        });
+        throw new AppError("Invalid API key", 401);
+      }
     }
 
     // Single bcrypt verification.
