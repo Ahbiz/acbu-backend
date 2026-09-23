@@ -111,6 +111,8 @@ Nodemon will automatically restart the server when you make changes to the code.
 - `pnpm prisma:migrate` - Run database migrations
 - `pnpm prisma:studio` - Open Prisma Studio
 - `pnpm prisma:seed` - Seed database with initial data
+- `pnpm changelog` - Regenerate the full CHANGELOG.md from all git history
+- `pnpm changelog:update` - Append the latest unreleased changes to CHANGELOG.md (after tagging a release)
 
 ## Project Structure
 
