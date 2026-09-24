@@ -16,3 +16,43 @@ paths = [
 ]
 
 # Intentionally do NOT allowlist .env.local — it must not be committed.
+
+# ── Commit-scoped allowlist for test-fixture false positives ─────────────────
+# These are dummy/placeholder values used in unit tests and CI env blocks.
+# Each entry is pinned to its exact commit fingerprint so that a real secret
+# added to the same file in a later commit would still be caught.
+[[allowlist.commits]]
+description = "tests/limits.test.ts — dummy JWT_SECRET test fixture"
+commits = ["dd42d72cff860971def0a40c896532b261b5bd5b"]
+
+[[allowlist.commits]]
+description = ".github/workflows/ci.yml — CI env JWT_SECRET placeholder"
+commits = ["43bacf1c569c22f9368b0f5f7bb2164c90bf182f"]
+
+[[allowlist.commits]]
+description = "tests/swapRace.test.ts — dummy JWT_SECRET test fixture"
+commits = ["6c5d0ce00d06e20aebb24c3401dcfbd14baff16e"]
+
+[[allowlist.commits]]
+description = ".github/workflows/env-contract-validation.yml — CI env JWT_SECRET placeholder"
+commits = ["df75e947e93cf7c3ea19ae9007ae0460cbd03360"]
+
+[[allowlist.commits]]
+description = "tests/env.test.ts — dummy API key test fixtures (line 197)"
+commits = ["9217df2706f3d8c51dbcb9c7d79a06e4aefe9ca7"]
+
+[[allowlist.commits]]
+description = "tests/logger.duplicate-imports.test.ts — dummy apiKey in redaction test"
+commits = ["27666a3bf0adb8eb9ccd84b7c9cb2aa43b11d467"]
+
+[[allowlist.commits]]
+description = "tests/env.test.ts — required env fixture block (line 7)"
+commits = ["4d6ac273483e4a31570126861055678f714e1d04"]
+
+[[allowlist.commits]]
+description = "src/services/stellar/client.test.ts — test Stellar secret key fixtures"
+commits = ["5923929f153c07b4c7f63bd59703b578c834432c"]
+
+[[allowlist.commits]]
+description = "scripts/initContracts.ts — Soroban contract addresses (public identifiers, not secrets)"
+commits = ["568795849a5081cfd4d3e6abfee9363226111c93"]
