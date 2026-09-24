@@ -178,6 +178,10 @@ This file documents the environment variables required by the ACBU backend and t
 - `OPENAI_API_KEY`
 - `OPENAI_ORG_MONTHLY_BUDGET_USD` - defaults to `50`
 - `OPENAI_MAX_TOKENS_PER_REQUEST` - defaults to `2000`
+- `OPENAI_FAIL_OPEN_ENABLED` - defaults to `false` (fail-closed for security/KYC compliance; set to `true` to fail open during service degradation)
+- `OPENAI_FAIL_OPEN_TIMEOUT_MS` - defaults to `2000` (timeout per request attempt in ms)
+- `OPENAI_FAIL_OPEN_MAX_RETRIES` - defaults to `2` (retry attempts on transient errors)
+- `OPENAI_FAIL_OPEN_RETRY_BASE_MS` - defaults to `500` (exponential backoff base in ms)
 
 ### CORS
 
