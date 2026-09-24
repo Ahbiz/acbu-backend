@@ -37,6 +37,7 @@ const envSchema = z.object({
   JWT_CLOCK_TOLERANCE_SECONDS: z.coerce.number().int().nonnegative().default(30),
   API_KEY_SALT: z.string().default(""),
   ADMIN_API_KEY: z.string().optional(),
+  ADMIN_API_KEYS: z.string().optional(),
   RATE_LIMIT_WINDOW_MS: z.coerce.number().int().positive().default(60000),
   RATE_LIMIT_MAX_REQUESTS: z.coerce.number().int().positive().default(100),
   AUTH_RATE_LIMIT_WINDOW_MS: z.coerce
@@ -254,6 +255,29 @@ export const config = {
   jwtClockToleranceSeconds: env.JWT_CLOCK_TOLERANCE_SECONDS,
   apiKeySalt: env.API_KEY_SALT,
   adminApiKey: env.ADMIN_API_KEY,
+  adminApiKeys: ((): Array<{ id: string; key: string }> => {
+    const keys: Array<{ id: string; key: string }> = [];
+    if (env.ADMIN_API_KEYS) {
+      env.ADMIN_API_KEYS.split(",")
+        .map((k) => k.trim())
+        .filter(Boolean)
+        .forEach((entry, idx) => {
+          if (entry.includes(":")) {
+            const [id, key] = entry.split(":", 2);
+            if (key && key.trim()) keys.push({ id: id.trim(), key: key.trim() });
+          } else {
+            keys.push({ id: `admin_${idx + 1}`, key: entry });
+          }
+        });
+    }
+    if (env.ADMIN_API_KEY && env.ADMIN_API_KEY.trim()) {
+      const singleKey = env.ADMIN_API_KEY.trim();
+      if (!keys.some((k) => k.key === singleKey)) {
+        keys.push({ id: "default_admin", key: singleKey });
+      }
+    }
+    return keys;
+  })(),
   rateLimitWindowMs: env.RATE_LIMIT_WINDOW_MS,
   rateLimitMaxRequests: env.RATE_LIMIT_MAX_REQUESTS,
   authRateLimitWindowMs: env.AUTH_RATE_LIMIT_WINDOW_MS,
