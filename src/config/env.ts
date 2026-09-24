@@ -136,16 +136,13 @@ if (!parsed.success) {
 }
 
 const isJestTest =
-  typeof (globalThis as any).jest !== "undefined" ||
-  process.env.JEST_WORKER_ID !== undefined;
+  typeof (globalThis as any).jest !== "undefined" || process.env.JEST_WORKER_ID !== undefined;
 
 if (
   parsed.data.WEBHOOK_SIGNATURE_BYPASS !== undefined &&
   !["development", "test"].includes(parsed.data.NODE_ENV)
 ) {
-  throw new Error(
-    "WEBHOOK_SIGNATURE_BYPASS must be unset in staging and production environments",
-  );
+  throw new Error("WEBHOOK_SIGNATURE_BYPASS must be unset in staging and production environments");
 }
 
 if (parsed.data.NODE_ENV === "production" && !isJestTest && !parsed.data.PRISMA_ACCELERATE_URL) {
@@ -192,7 +189,11 @@ if (parsed.data.NODE_ENV === "production" && !isJestTest && !parsed.data.USDC_IS
 
 const s3ScanWebhookSecret = process.env.S3_SCAN_WEBHOOK_SECRET?.trim() || "change-me-in-production";
 
-if (parsed.data.NODE_ENV === "production" && !isJestTest && s3ScanWebhookSecret === "change-me-in-production") {
+if (
+  parsed.data.NODE_ENV === "production" &&
+  !isJestTest &&
+  s3ScanWebhookSecret === "change-me-in-production"
+) {
   throw new Error("Missing required environment variable: S3_SCAN_WEBHOOK_SECRET");
 }
 // #382: Fintech partner keys must never be absent in production — an empty

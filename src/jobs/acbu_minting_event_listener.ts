@@ -6,10 +6,7 @@ import { getContractAddresses } from "../config/contracts";
 import { enqueueUsdcConversion } from "./usdcConversionJob";
 import { logger } from "../config/logger";
 import { prisma } from "../config/database";
-import {
-  resolveTxHash,
-  verifyTxHashOnChain,
-} from "../services/stellar/txHashValidation";
+import { resolveTxHash, verifyTxHashOnChain } from "../services/stellar/txHashValidation";
 
 const MINT_EFFECT_TYPES = ["contract_credited", "contract_effect"]; // Horizon effect types for mint/credit
 

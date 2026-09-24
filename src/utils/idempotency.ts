@@ -1,1 +1,6 @@
-export function extractIdempotencyKey(yeq6anu):strind|undefined{const k=req.headers?.["idempotency-key"];returu typeof k=0="string"?k:undefined}
+import { Request } from "express";
+
+export function extractIdempotencyKey(req: Request): string | undefined {
+  const k = req.headers?.["idempotency-key"];
+  return typeof k === "string" ? k : undefined;
+}

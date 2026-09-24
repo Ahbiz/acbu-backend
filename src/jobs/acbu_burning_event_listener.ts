@@ -6,10 +6,7 @@ import { getContractAddresses } from "../config/contracts";
 import { enqueueWithdrawalProcessing } from "./withdrawalProcessingJob";
 import { logger } from "../config/logger";
 import { prisma } from "../config/database";
-import {
-  resolveTxHash,
-  verifyTxHashOnChain,
-} from "../services/stellar/txHashValidation";
+import { resolveTxHash, verifyTxHashOnChain } from "../services/stellar/txHashValidation";
 
 const BURN_EFFECT_TYPES = ["contract_debited", "contract_effect"];
 
