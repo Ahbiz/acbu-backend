@@ -60,7 +60,8 @@ This file documents the environment variables required by the ACBU backend and t
 - `JWT_EXPIRES_IN` - defaults to `7d`
 - `JWT_CLOCK_TOLERANCE_SECONDS` - defaults to `30`
 - `API_KEY_SALT` - defaults to empty string
-- `ADMIN_API_KEY`
+- `ADMIN_API_KEY` - Single admin key (legacy support)
+- `ADMIN_API_KEYS` - Comma-separated list of admin keys or `adminId:key` pairs for multi-admin authentication and attribution
 - `LOG_LEVEL` - defaults to `info`
 - `LOG_FILE` - defaults to `logs/app.log`
 
